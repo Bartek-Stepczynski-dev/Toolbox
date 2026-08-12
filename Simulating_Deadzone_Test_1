@@ -1,0 +1,27 @@
+void setup() {
+ 
+  Serial.begin(9600);
+  Serial.println(F("System starting up... Initializing sensor logic.")); // using Flash
+}
+
+void loop() {
+  
+  float rawSensorData = random(-5,6) / 100.0; 
+
+  
+  float cleanData = applyDeadzone(rawSensorData, 0.05);
+
+  Serial.print(F("Raw reading: "));
+  Serial.print(rawSensorData);
+  Serial.print(F(" -> After filtering (dead zone): "));
+  Serial.println(cleanData);
+
+  delay(1000);
+}
+
+
+float applyDeadzone(float rawValue, float threshold) { // parameters
+  if (abs(rawValue) < threshold) { // absolute value
+    return 0.0; }
+  return rawValue; 
+}
